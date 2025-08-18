@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  TodoGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: handlers.get_handler
+      Runtime: python3.13
+      CodeUri: TodoGet
+      Policies:
+      - Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - dynamodb:GetItem
+          - dynamodb:Query
+          Resource: arn:aws:dynamodb:ap-southeast-1:106754953546:table/todo_test
+      Description: Get
+      Environment:
+        Variables:
+          TODO_TABLE: todo_test
+      Events:
+        ApiTodoListAPI:
+          Type: Api
+          Properties:
+            Path: /todo
+            Method: GET
+    Metadata:
+      SamResourceId: TodoGet

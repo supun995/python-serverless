@@ -1,0 +1,1 @@
+from .get import lamda_handler as get_handler
